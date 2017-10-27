@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://use.fontawesome.com/2a8a6780db.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+		body{
+			font-size:15px;
+		}
+
+		form{
+			z-index: 0;
+		}
+		.modal {
+		    z-index: 10000;
+		}
+
+		#title,.profile,button{
+			font-family: 'Varela Round', sans-serif;
+		}
+
+		#title{
+			padding:30px;
+			background-color:#ddd;
+			text-align:center;
+			border-radius:15px;
+			color:#333;
+			border:10px solid #333;
+		}
+		
+		.profile:hover{
+			transform:scale(1.005);
+			box-shadow:0px 0px 10px #2D4659;
+			background-color:;
+		}
+
+		.profile{
+			margin:20px 5px;
+			padding:15px;
+			border-radius:10px;
+			border:4px solid black;
+			transition:all 0.3s;
+		}
+
+		button{
+			width:100%;
+			border-radius:15px;
+			font-size:30px;
+			outline:none;
+			border:4px solid black;
+		    background: linear-gradient(to right, #2FA4DA 50%, #239AA3 50%);
+			background-size: 200% 100%;		
+			background-position:right bottom;
+			transition:all 1s ease;
+		}
+
+		button:hover{
+			background-position:left bottom;
+		}
+
+		img{
+			width:100%;
+		}
+
+	</style>
+</head>
+<body>
+
+	<h1 id="title">Survey (1=Hate - 5=Love)</h1>
+	<form>
+		<div class="profile">Name:<input id="name" type="text"></div>
+		<div class="profile">Photo Link:<input id="picLink" type="text"></div>
+		<div class="profile">Rate how much you like jazz:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like classic movies:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like hiking:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like chocolate:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like reading:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like going to the mall:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like going to the beach:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like international traveling:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like what you do for work:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like alone time:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<div class="profile">Rate how much you like sports:
+		<select>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+		</select></div>
+		<button type="button" id="send">Find Friend</button>
+	</form>
+	<!--incoming messages modal-->
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		    <div class="modal-header text-center">
+		    	Meet your new best friend
+			</div>
+		    <div class="modal-body text-center">
+			</div>
+		    <div class="modal-footer text-center">
+		    	<button type="button" data-dismiss="modal" aria-hidden="true" class="result">Close</button>
+			</div>			
+		</div>
+	  </div>
+	</div>
+<script type="text/javascript">
+	document.querySelector("#send").addEventListener("click",function(){
+		var choiceArr = [];
+		var answers = document.querySelectorAll("select");
+		for ( var i = 0 ; i < answers.length ; i++){
+			choiceArr.push(answers[i].options[answers[i].selectedIndex].text);
+		}
+	
+		var userProfile = {
+			name:$("#name").val(),
+			profilePic:$("#picLink").val(),
+			choices: choiceArr
+		};
+
+		var currAddress = window.location.origin;
+
+		$.post(currAddress + "/api/friends",userProfile).then(function(friendProfile){
+			var profileData;
+			if(typeof friendProfile == "string"){
+				profileData = "<p>"+friendProfile+"</p>";
+			} else {
+				profileData = "<p>"+friendProfile.name+"</p>";
+				profileData += "<img src='"+friendProfile.profilePic+"'>";
+			};
+			$(".modal-body").empty();
+			$(".modal-body").html(profileData);
+			$('#myModal').modal({backdrop: 'static', keyboard: false});
+			$("#myModal").modal("show"); 
+			$("#myModal").show()
+			$("#name").val("");
+			$("#picLink").val("");
+		});
+
+	});
+</script>
+</body>
+</html>
